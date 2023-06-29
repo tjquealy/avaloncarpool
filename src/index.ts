@@ -139,5 +139,5 @@ window.Webflow.push(() => {
   }).addTo(map);
   layer.bindPopup('This is Avalon!');
 
-  console.log('MANIAC YOU ? You1');
+  // console.log('MANIAC YOU ? You1');
 });
