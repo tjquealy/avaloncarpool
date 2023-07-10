@@ -5,7 +5,7 @@ window.Webflow ||= [];
 window.Webflow.push(() => {
   const devBtn = document.querySelector('#devBtn');
   const subBtn = document.querySelector('#subBtn');
-  const devText = document.querySelector('#devText');
+  // const devText = document.querySelector('#devText');
   const latForm = document.querySelector('#lat');
   const lngForm = document.querySelector('#lng');
 
@@ -144,7 +144,7 @@ window.Webflow.push(() => {
       document.getElementById('submission-thanks').style.display = 'flex';
 
       console.log('CLEARED');
-    } else console.log("something dind't work");
+    } else console.log("something dind't work you fool");
   });
 });
 
