@@ -1,8 +1,8 @@
 {
   "name": "avaloncarpool",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Carpool Connector",
-  "homepage": "https://github.com/finsweet/developer-starter#readme",
+  "homepage": "https://github.com/tjquealy/avaloncarpool.git",
   "license": "ISC",
   "keywords": [],
   "author": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/finsweet/developer-starter.git"
+    "url": "git+https://github.com/tjquealy/avaloncarpool.git"
   },
   "bugs": {
     "url": "https://github.com/finsweet/developer-starter/issues"
