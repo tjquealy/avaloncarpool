@@ -4,7 +4,10 @@ import { greetUser } from '$utils/greet';
 window.Webflow ||= [];
 window.Webflow.push(() => {
   const devBtn = document.querySelector('#devBtn');
+  const subBtn = document.querySelector('#subBtn');
   const devText = document.querySelector('#devText');
+  const latForm = document.querySelector('#lat');
+  const lngForm = document.querySelector('#lng');
 
   ///////////////////////////////////////////////////////
   const map = L.map('map').setView([44.96193, -93.19876], 12);
@@ -77,16 +80,34 @@ window.Webflow.push(() => {
 
   devBtn?.addEventListener('click', function () {
     const { lat, lng } = house.getLatLng();
+    latForm.value = lat;
+    lngForm.value = lng;
+    const homeIcon2 = L.icon({
+      iconUrl: 'https://static.wixstatic.com/media/c4450c_168cf5fbfc1b4ff5b175236c985a3086~mv2.png',
+      iconSize: [20, 20],
+      iconAnchor: [15, -10],
+    });
+    house.setIcon(homeIcon2);
+    // map.setView(house.getLatLng(), 13);
+    // house.bindPopup('This is you!<br>Explore the map to connect!').openPopup();
+    console.log('Ready to go');
+  });
+
+  subBtn?.addEventListener('click', function () {
     const name = document.querySelector('#name')?.value;
+    const lat = document.querySelector('#lat')?.value;
+    const lng = document.querySelector('#lng')?.value;
     const pref = document.querySelector('#preference')?.value;
     const cont = document.querySelector('#contact')?.value;
     const permBox = document.querySelector('#permissionBox').checked;
     const mapBox = document.querySelector('#mapBox').checked;
     const date = new Date(Date.now()).toLocaleString();
-    // console.log(name, pref, cont, permBox);
+    console.log(name, pref, cont, lat, lng, permBox);
+
+    map.setView(house.getLatLng(), 13);
+    house.bindPopup('This is you!<br>Explore the map to connect!').openPopup();
     console.log(date, permBox);
     if (name && pref && cont && permBox === true && mapBox === true) {
-      console.log('Ready to go');
       const options = {
         method: 'POST',
         headers: {
@@ -101,43 +122,94 @@ window.Webflow.push(() => {
             contact: cont,
             preference: pref,
             slug: name,
-            Lat: `${lat.toString()}`,
-            Lng: `${lng.toString()}`,
+            Lat: lat,
+            Lng: lng,
             Status: 'Active',
             date: date,
           },
         }),
       };
-
       fetch('https://api.airtable.com/v0/appFU39SABmXIlZRs/tblYQ1DRIwpTLLUWS', options)
         .then((response) => response.json())
         .then((response) => console.log(response))
         .catch((err) => console.error(err)); // STOPPEPD HERE
 
-      const homeIcon2 = L.icon({
-        iconUrl:
-          'https://static.wixstatic.com/media/c4450c_168cf5fbfc1b4ff5b175236c985a3086~mv2.png',
-        iconSize: [20, 20],
-        iconAnchor: [15, -10],
-      });
-      house.setIcon(homeIcon2);
-      map.setView(house.getLatLng(), 13);
-      house.bindPopup('This is you!<br>Explore the map to connect!').openPopup();
+      document.querySelector('#name').value = '';
+      // pref = '';
+      document.querySelector('#contact').value = '';
+      document.querySelector('#preference').value = '';
 
-      const scrollToElement = document.querySelector('#mapZoom').offsetTop;
-      window.scrollTo(0, scrollToElement);
+      document.querySelector('#permissionBox').checked = false;
+      document.querySelector('#mapBox').checked = false;
+      document.getElementById('submission-thanks').style.display = 'flex';
+
+      console.log('CLEARED');
     } else console.log("something dind't work");
   });
-  const schoolIcon = L.icon({
-    iconUrl: 'https://img.icons8.com/fluency-systems-filled/512/school-building.png',
-    iconSize: [30, 30],
-    iconAnchor: [15, 15],
-  });
-
-  const layer = L.marker([44.962242019810816, -93.19836196172906], {
-    icon: schoolIcon,
-  }).addTo(map);
-  layer.bindPopup('This is Avalon!');
-
-  // console.log('MANIAC YOU ? You1');
 });
+
+// const name = document.querySelector('#name')?.value;
+// const lat = document.querySelector('#name')?.value;
+// const name = document.querySelector('#name')?.value;
+// const pref = document.querySelector('#preference')?.value;
+// const cont = document.querySelector('#contact')?.value;
+// const permBox = document.querySelector('#permissionBox').checked;
+// const mapBox = document.querySelector('#mapBox').checked;
+// const date = new Date(Date.now()).toLocaleString();
+// console.log(name, pref, cont, permBox);
+// console.log(date, permBox);
+// if (name && pref && cont && permBox === true && mapBox === true) {
+
+// const options = {
+//   method: 'POST',
+//   headers: {
+//     accept: 'application/json',
+//     'content-type': 'application/json',
+//     authorization:
+//       'Bearer patrAJ8JGjXuGM2q1.42e1c29a4f18aa9bf9e192c82814e74e5d2ab9baae5543eb1d12f422d6461f02',
+//   },
+//   body: JSON.stringify({
+//     fields: {
+//       Name: name,
+//       contact: cont,
+//       preference: pref,
+//       slug: name,
+//       Lat: `${lat.toString()}`,
+//       Lng: `${lng.toString()}`,
+//       Status: 'Active',
+//       date: date,
+//     },
+//   }),
+// };
+
+// fetch('https://api.airtable.com/v0/appFU39SABmXIlZRs/tblYQ1DRIwpTLLUWS', options)
+//   .then((response) => response.json())
+//   .then((response) => console.log(response))
+//   .catch((err) => console.error(err)); // STOPPEPD HERE
+
+// const homeIcon2 = L.icon({
+//   iconUrl:
+//     'https://static.wixstatic.com/media/c4450c_168cf5fbfc1b4ff5b175236c985a3086~mv2.png',
+//   iconSize: [20, 20],
+//   iconAnchor: [15, -10],
+// });
+// house.setIcon(homeIcon2);
+// map.setView(house.getLatLng(), 13);
+// house.bindPopup('This is you!<br>Explore the map to connect!').openPopup();
+
+// const scrollToElement = document.querySelector('#mapZoom').offsetTop;
+// window.scrollTo(0, scrollToElement);
+// } else console.log("something dind't work");
+// });
+//   const schoolIcon = L.icon({
+//     iconUrl: 'https://img.icons8.com/fluency-systems-filled/512/school-building.png',
+//     iconSize: [30, 30],
+//     iconAnchor: [15, 15],
+//   });
+
+//   const layer = L.marker([44.962242019810816, -93.19836196172906], {
+//     icon: schoolIcon,
+//   }).addTo(map);
+//   layer.bindPopup('This is Avalon!');
+
+//   // console.log('MANIAC YOU ? You1');
