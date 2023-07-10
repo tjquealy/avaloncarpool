@@ -144,6 +144,8 @@ window.Webflow.push(() => {
       document.getElementById('submission-thanks').style.display = 'flex';
 
       console.log('CLEARED');
+      const scrollToElement = document.querySelector('#mapZoom').offsetTop;
+      window.scrollTo(0, scrollToElement);
     } else console.log("something dind't work you fool");
   });
 });
