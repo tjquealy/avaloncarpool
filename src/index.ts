@@ -18,6 +18,17 @@ window.Webflow.push(() => {
   }).addTo(map);
   // L.Control.geocoder().addTo(map);
 
+  const schoolIcon = L.icon({
+    iconUrl: 'https://img.icons8.com/fluency-systems-filled/512/school-building.png',
+    iconSize: [30, 30],
+    iconAnchor: [15, 15],
+  });
+
+  const layer = L.marker([44.962242019810816, -93.19836196172906], {
+    icon: schoolIcon,
+  }).addTo(map);
+  layer.bindPopup('This is Avalon!').openPopup();
+
   const myHeaders = new Headers();
   myHeaders.append(
     'Authorization',
@@ -65,14 +76,14 @@ window.Webflow.push(() => {
     const homeIcon = L.icon({
       iconUrl: 'https://img.icons8.com/doodle/512/filled-flag.png',
       iconSize: [20, 20],
-      iconAnchor: [10, 10],
+      iconAnchor: [10, -5],
     });
 
     house = L.marker([e.latlng.lat, e.latlng.lng], {
       draggable: true,
       icon: homeIcon,
     }).addTo(map);
-    map.setView(house.getLatLng());
+    map.setView(house.getLatLng(), 14);
     house
       .bindPopup('Drag your flag to wherever you want,<br>and then submit the form below')
       .openPopup();
@@ -84,13 +95,13 @@ window.Webflow.push(() => {
     lngForm.value = lng;
     const homeIcon2 = L.icon({
       iconUrl: 'https://static.wixstatic.com/media/c4450c_168cf5fbfc1b4ff5b175236c985a3086~mv2.png',
-      iconSize: [20, 20],
-      iconAnchor: [15, -10],
+      iconSize: [30, 30],
+      iconAnchor: [15, 15],
     });
     house.setIcon(homeIcon2);
-    // map.setView(house.getLatLng(), 13);
-    // house.bindPopup('This is you!<br>Explore the map to connect!').openPopup();
-    console.log('Ready to go');
+    map.setView(house.getLatLng(), 13);
+    house.bindPopup('This is you!<br>Explore the map to connect!').openPopup();
+    // console.log('Ready to go');
   });
 
   subBtn?.addEventListener('click', function () {
@@ -102,11 +113,11 @@ window.Webflow.push(() => {
     const permBox = document.querySelector('#permissionBox').checked;
     const mapBox = document.querySelector('#mapBox').checked;
     const date = new Date(Date.now()).toLocaleString();
-    console.log(name, pref, cont, lat, lng, permBox);
+    // console.log(name, pref, cont, lat, lng, permBox);
 
-    map.setView(house.getLatLng(), 13);
-    house.bindPopup('This is you!<br>Explore the map to connect!').openPopup();
-    console.log(date, permBox);
+    // map.setView(house.getLatLng(), 13);
+    // house.bindPopup('This is you!<br>Explore the map to connect!').openPopup();
+    // console.log(date, permBox);
     if (name && pref && cont && permBox === true && mapBox === true) {
       const options = {
         method: 'POST',
@@ -142,12 +153,16 @@ window.Webflow.push(() => {
       document.querySelector('#permissionBox').checked = false;
       document.querySelector('#mapBox').checked = false;
       document.getElementById('submission-thanks').style.display = 'flex';
-
-      console.log('CLEARED');
-      const scrollToElement = document.querySelector('#mapZoom').offsetTop;
-      window.scrollTo(0, scrollToElement);
+      document.querySelector('#subBtn').style.display = 'none';
+      // console.log('CLEARED');
     } else console.log("something dind't work you fool");
   });
+
+  // Assuming you have a button element with the id "scrollButton"
+  // const targetElement = document.getElementById('targetElement');
+  // console.log(targetElement);
+  // targetElement.scrollIntoView({ behavior: 'smooth' });
+  // console.log('THE END');
 });
 
 // const name = document.querySelector('#name')?.value;
@@ -203,15 +218,5 @@ window.Webflow.push(() => {
 // window.scrollTo(0, scrollToElement);
 // } else console.log("something dind't work");
 // });
-//   const schoolIcon = L.icon({
-//     iconUrl: 'https://img.icons8.com/fluency-systems-filled/512/school-building.png',
-//     iconSize: [30, 30],
-//     iconAnchor: [15, 15],
-//   });
 
-//   const layer = L.marker([44.962242019810816, -93.19836196172906], {
-//     icon: schoolIcon,
-//   }).addTo(map);
-//   layer.bindPopup('This is Avalon!');
-
-//   // console.log('MANIAC YOU ? You1');
+// console.log('MANIAC YOU ? You1');
